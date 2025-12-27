@@ -6,110 +6,139 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
-body {
-  background: linear-gradient(135deg,#0f0f0f,#1b1b1b);
-  color: #fff;
-  font-family: Arial, sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
-.container {
-  background: #1f1f1f;
-  padding: 25px;
-  border-radius: 14px;
-  width: 100%;
-  max-width: 420px;
-  box-shadow: 0 0 25px rgba(0,0,0,.6);
-  text-align: center;
-}
-h1 {
-  margin-bottom: 5px;
-}
-.subtitle {
-  font-size: 14px;
-  color: #aaa;
-  margin-bottom: 20px;
-}
-input {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  outline: none;
-  font-size: 14px;
-}
-.buttons {
-  margin-top: 15px;
-}
-button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.fb { background:#1877f2; color:white; }
-.tt { background:#000000; color:white; border:1px solid #444; }
-.yt { background:#ff0000; color:white; }
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
 
-footer {
-  margin-top: 15px;
-  font-size: 12px;
-  color: #777;
+body{
+  background:radial-gradient(circle at top,#0b0b0b,#000000);
+  color:#e5e5e5;
+  font-family:'Orbitron',sans-serif;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.card{
+  background:linear-gradient(145deg,#0f0f0f,#151515);
+  padding:28px;
+  border-radius:16px;
+  width:100%;
+  max-width:420px;
+  text-align:center;
+  box-shadow:
+    0 0 25px rgba(255,215,0,.15),
+    inset 0 0 20px rgba(0,0,0,.9);
+  border:1px solid #222;
+}
+
+.logo{
+  font-size:26px;
+  letter-spacing:2px;
+  color:#f5c542;
+  text-shadow:0 0 10px rgba(245,197,66,.6);
+}
+
+.sub{
+  font-size:13px;
+  color:#999;
+  margin-bottom:22px;
+}
+
+input{
+  width:100%;
+  padding:14px;
+  border-radius:10px;
+  border:none;
+  outline:none;
+  background:#0a0a0a;
+  color:#fff;
+  box-shadow:inset 0 0 10px rgba(0,0,0,.8);
+}
+
+input::placeholder{
+  color:#666;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  margin-top:12px;
+  border:none;
+  border-radius:10px;
+  font-size:14px;
+  font-weight:700;
+  letter-spacing:1px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+button:hover{
+  transform:scale(1.02);
+}
+
+.fb{
+  background:linear-gradient(135deg,#1b4fb8,#0d2a66);
+  color:#fff;
+  box-shadow:0 0 12px rgba(24,119,242,.4);
+}
+
+.tt{
+  background:linear-gradient(135deg,#111,#000);
+  color:#fff;
+  border:1px solid #333;
+  box-shadow:0 0 12px rgba(255,255,255,.1);
+}
+
+.yt{
+  background:linear-gradient(135deg,#b00000,#400000);
+  color:#fff;
+  box-shadow:0 0 12px rgba(255,0,0,.4);
+}
+
+footer{
+  margin-top:18px;
+  font-size:11px;
+  color:#666;
 }
 </style>
 </head>
 
 <body>
-<div class="container">
-  <h1>PANDI Downloader</h1>
-  <div class="subtitle">Facebook • TikTok • YouTube</div>
+<div class="card">
+  <div class="logo">🦇 PANDI</div>
+  <div class="sub">Dark Knight Downloader</div>
 
-  <input id="url" placeholder="Tempel link di sini">
+  <input id="url" placeholder="Tempel link FB / TikTok / YouTube">
 
-  <div class="buttons">
-    <button class="fb" onclick="downloadFB()">Download Facebook</button>
-    <button class="tt" onclick="downloadTT()">Download TikTok</button>
-    <button class="yt" onclick="downloadYT()">Download YouTube MP3</button>
-  </div>
+  <button class="fb" onclick="fb()">FACEBOOK</button>
+  <button class="tt" onclick="tt()">TIKTOK</button>
+  <button class="yt" onclick="yt()">YOUTUBE MP3</button>
 
   <footer>
-    Gunakan hanya untuk konten milik sendiri
+    Only for your own content
   </footer>
 </div>
 
 <script>
-function getURL() {
-  const url = document.getElementById("url").value.trim();
-  if (!url) {
-    alert("Masukkan link dulu!");
-    return null;
-  }
-  return encodeURIComponent(url);
+function getUrl(){
+  const u=document.getElementById("url").value.trim();
+  if(!u){alert("Masukkan link dulu!");return null;}
+  return encodeURIComponent(u);
 }
 
-// ⚠️ GANTI API SESUAI YANG LU PUNYA
-function downloadFB() {
-  const url = getURL();
-  if (!url) return;
-  window.open("https://example-api.com/facebook?url=" + url);
+function fb(){
+  const u=getUrl(); if(!u) return;
+  window.open("https://api.vreden.web.id/api/fbdl?url="+u);
 }
 
-function downloadTT() {
-  const url = getURL();
-  if (!url) return;
-  window.open("https://example-api.com/tiktok?url=" + url);
+function tt(){
+  const u=getUrl(); if(!u) return;
+  window.open("https://api.vreden.web.id/api/tiktok?url="+u);
 }
 
-function downloadYT() {
-  const url = getURL();
-  if (!url) return;
-  window.open("https://example-api.com/youtube/mp3?url=" + url);
+function yt(){
+  const u=getUrl(); if(!u) return;
+  window.open("https://api.vreden.web.id/api/ytmp3?url="+u);
 }
 </script>
 </body>
