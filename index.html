@@ -1,88 +1,88 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>PANDI Downloader</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <style>
-    body {
-      background:#0f0f0f;
-      color:#fff;
-      font-family:Arial, sans-serif;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      height:100vh;
-    }
-    .card {
-      background:#1e1e1e;
-      padding:20px;
-      border-radius:10px;
-      width:100%;
-      max-width:380px;
-      text-align:center;
-    }
-    h1 {
-      margin-bottom:5px;
-    }
-    p {
-      font-size:14px;
-      color:#aaa;
-    }
-    input {
-      width:100%;
-      padding:10px;
-      margin-top:15px;
-      border:none;
-      border-radius:5px;
-      outline:none;
-    }
-    button {
-      width:100%;
-      padding:12px;
-      margin-top:15px;
-      border:none;
-      border-radius:5px;
-      background:#4caf50;
-      color:#000;
-      font-weight:bold;
-      font-size:16px;
-      cursor:pointer;
-    }
-    .note {
-      margin-top:15px;
-      font-size:12px;
-      color:#888;
-    }
-  </style>
+<meta charset="UTF-8">
+<title>PANDI Downloader</title>
+<style>
+body{
+  background:#0b0f1a;
+  color:#fff;
+  font-family:Arial;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+}
+.box{
+  width:95%;
+  max-width:420px;
+  background:#121826;
+  padding:20px;
+  border-radius:10px;
+}
+input{
+  width:100%;
+  padding:12px;
+  border-radius:6px;
+  border:none;
+  margin-bottom:10px;
+}
+button{
+  width:100%;
+  padding:12px;
+  margin:5px 0;
+  border:none;
+  border-radius:6px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.fb{background:#1877f2}
+.tt{background:#000}
+.yt{background:#ff0000}
+iframe{
+  width:100%;
+  border:none;
+  margin-top:10px;
+  height:70px;
+}
+</style>
 </head>
 <body>
 
-<div class="card">
-  <h1>PANDI Downloader</h1>
-  <p>FB • TikTok • YouTube → MP3</p>
+<div class="box">
+<h2>🦇 PANDI Downloader</h2>
 
-  <input id="url" placeholder="Tempel link FB / TT / YouTube">
+<input id="url" placeholder="Tempel link FB / TT / YT">
 
-  <button onclick="download()">Download MP3</button>
+<button class="fb" onclick="fb()">Facebook</button>
+<button class="tt" onclick="tt()">TikTok</button>
+<button class="yt" onclick="yt()">YouTube MP3</button>
 
-  <div class="note">
-    Gunakan hanya untuk konten milik sendiri
-  </div>
+<div id="result"></div>
 </div>
 
 <script>
-function download() {
-  const url = document.getElementById("url").value.trim();
-  if (!url) {
-    alert("Masukkan link dulu!");
-    return;
-  }
+function get(){
+  return document.getElementById("url").value.trim();
+}
 
-  // CONTOH API (GANTI DENGAN API VALID)
-  const api = "https://example-downloader-api.com/mp3?url=" + encodeURIComponent(url);
+function fb(){
+  document.getElementById("result").innerHTML =
+  `<iframe src="https://fdownloader.net/"></iframe>`;
+}
 
-  window.open(api, "_blank");
+function tt(){
+  const u=get();
+  if(!u)return alert("Tempel link dulu");
+  document.getElementById("result").innerHTML =
+  `<iframe src="https://tikwm.com/${u}"></iframe>`;
+}
+
+function yt(){
+  const u=get();
+  if(!u)return alert("Tempel link dulu");
+  document.getElementById("result").innerHTML =
+  `<iframe src="https://api.vevioz.com/api/button/mp3/${u}"></iframe>`;
 }
 </script>
 
