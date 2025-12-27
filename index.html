@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>PANDI Downloader</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  background: linear-gradient(135deg,#0f0f0f,#1b1b1b);
+  color: #fff;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+.container {
+  background: #1f1f1f;
+  padding: 25px;
+  border-radius: 14px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 0 25px rgba(0,0,0,.6);
+  text-align: center;
+}
+h1 {
+  margin-bottom: 5px;
+}
+.subtitle {
+  font-size: 14px;
+  color: #aaa;
+  margin-bottom: 20px;
+}
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  font-size: 14px;
+}
+.buttons {
+  margin-top: 15px;
+}
+button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.fb { background:#1877f2; color:white; }
+.tt { background:#000000; color:white; border:1px solid #444; }
+.yt { background:#ff0000; color:white; }
+
+footer {
+  margin-top: 15px;
+  font-size: 12px;
+  color: #777;
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+  <h1>PANDI Downloader</h1>
+  <div class="subtitle">Facebook • TikTok • YouTube</div>
+
+  <input id="url" placeholder="Tempel link di sini">
+
+  <div class="buttons">
+    <button class="fb" onclick="downloadFB()">Download Facebook</button>
+    <button class="tt" onclick="downloadTT()">Download TikTok</button>
+    <button class="yt" onclick="downloadYT()">Download YouTube MP3</button>
+  </div>
+
+  <footer>
+    Gunakan hanya untuk konten milik sendiri
+  </footer>
+</div>
+
+<script>
+function getURL() {
+  const url = document.getElementById("url").value.trim();
+  if (!url) {
+    alert("Masukkan link dulu!");
+    return null;
+  }
+  return encodeURIComponent(url);
+}
+
+// ⚠️ GANTI API SESUAI YANG LU PUNYA
+function downloadFB() {
+  const url = getURL();
+  if (!url) return;
+  window.open("https://example-api.com/facebook?url=" + url);
+}
+
+function downloadTT() {
+  const url = getURL();
+  if (!url) return;
+  window.open("https://example-api.com/tiktok?url=" + url);
+}
+
+function downloadYT() {
+  const url = getURL();
+  if (!url) return;
+  window.open("https://example-api.com/youtube/mp3?url=" + url);
+}
+</script>
+</body>
+</html>
