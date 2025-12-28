@@ -3,94 +3,160 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PANDI Downloader</title>
+<title>Matcha Speed Test</title>
+
 <style>
-:root{
-  --matcha:#4caf7a;
-  --bg:#e9f5ee;
-  --card:#ffffff;
-  --text:#1b4332;
+:root {
+  --matcha-dark: #1f3d2b;
+  --matcha-main: #6fbf9b;
+  --matcha-light: #b7e4c7;
 }
-body{
-  font-family:system-ui;
-  background:var(--bg);
-  margin:0;
-  padding:20px;
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at top, #2d6a4f, #081c15);
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
-.container{
-  max-width:420px;
-  margin:auto;
-  background:var(--card);
-  padding:20px;
-  border-radius:16px;
-  box-shadow:0 10px 30px rgba(0,0,0,.1);
+
+.card {
+  width: 360px;
+  background: rgba(0,0,0,0.35);
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 0 30px rgba(111,191,155,.5);
+  text-align: center;
 }
-h1{
-  text-align:center;
-  color:var(--text);
+
+h1 {
+  color: var(--matcha-light);
+  margin-bottom: 10px;
+  letter-spacing: 2px;
 }
-input{
-  width:100%;
-  padding:14px;
-  border-radius:12px;
-  border:2px solid var(--matcha);
-  margin-bottom:14px;
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
 }
-button{
-  width:100%;
-  padding:14px;
-  border:none;
-  border-radius:12px;
-  background:var(--matcha);
-  color:white;
-  font-size:16px;
-  font-weight:bold;
+
+.stat {
+  font-size: 14px;
 }
-.note{
-  text-align:center;
-  font-size:13px;
-  margin-top:10px;
-  color:#555;
+
+.stat span {
+  display: block;
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--matcha-main);
+}
+
+.gauge {
+  position: relative;
+  width: 260px;
+  height: 130px;
+  margin: 20px auto;
+  border-radius: 260px 260px 0 0;
+  background: linear-gradient(to right, #2d6a4f, #95d5b2);
+  overflow: hidden;
+}
+
+.needle {
+  position: absolute;
+  width: 4px;
+  height: 110px;
+  background: white;
+  bottom: 0;
+  left: 50%;
+  transform-origin: bottom;
+  transform: rotate(-90deg);
+  transition: transform 1s ease-out;
+}
+
+.speed {
+  font-size: 26px;
+  color: var(--matcha-light);
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 25px;
+  border: none;
+  border-radius: 25px;
+  background: var(--matcha-main);
+  color: #081c15;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+button:hover {
+  background: var(--matcha-light);
+}
+
+.miku {
+  margin-top: 15px;
+}
+
+.miku img {
+  width: 100px;
+  filter: drop-shadow(0 0 10px #95d5b2);
 }
 </style>
 </head>
+
 <body>
+<div class="card">
+  <h1>SPEED TEST</h1>
 
-<div class="container">
-<h1>🍵 PANDI Downloader</h1>
+  <div class="stats">
+    <div class="stat">PING<span id="ping">1 ms</span></div>
+    <div class="stat">DOWNLOAD<span id="down">0 Mbps</span></div>
+    <div class="stat">UPLOAD<span id="up">0 Mbps</span></div>
+  </div>
 
-<input id="url" placeholder="Tempel link TikTok di sini">
+  <div class="gauge">
+    <div class="needle" id="needle"></div>
+  </div>
 
-<button onclick="download()">DOWNLOAD</button>
+  <div class="speed" id="speed">0 Mbps</div>
 
-<p class="note">
-Klik tombol → download akan dimulai otomatis<br>
-Jika gagal, browser akan membuka tab baru
-</p>
+  <button onclick="startTest()">START TEST</button>
+
+  <div class="miku">
+    <img src="miku.png" alt="Hatsune Miku">
+  </div>
 </div>
 
 <script>
-function download(){
-  const url = document.getElementById("url").value;
-  if(!url.includes("tiktok")){
-    alert("Masukkan link TikTok valid!");
-    return;
-  }
+function startTest() {
+  let maxSpeed = 6500;
+  let speed = 0;
 
-  // extract ID
-  const idMatch = url.match(/video\/(\d+)/);
-  if(!idMatch){
-    alert("Gagal membaca ID video");
-    return;
-  }
+  let interval = setInterval(() => {
+    speed += Math.random() * 400;
+    if (speed >= maxSpeed) {
+      speed = maxSpeed;
+      clearInterval(interval);
+    }
 
-  const videoId = idMatch[1];
-  const api = `https://tikwm.com/video/media/hdplay/${videoId}.mp4`;
+    document.getElementById("speed").innerText =
+      speed.toFixed(2) + " Mbps";
+    document.getElementById("down").innerText =
+      speed.toFixed(2) + " Mbps";
 
-  // force redirect
-  window.location.href = api;
+    let angle = (speed / maxSpeed) * 180 - 90;
+    document.getElementById("needle").style.transform =
+      `rotate(${angle}deg)`;
+  }, 80);
+
+  document.getElementById("ping").innerText = "1 ms";
+  document.getElementById("up").innerText =
+    (Math.random() * 900).toFixed(2) + " Mbps";
 }
 </script>
-
 </body>
 </html>
