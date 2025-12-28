@@ -1,44 +1,37 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #f2f5f9;
-}
+async function loadFiles() {
+  const repo = document.getElementById("repo").value.trim();
+  const filesDiv = document.getElementById("files");
 
-.container {
-  max-width: 600px;
-  margin: 40px auto;
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-}
+  if (!repo) {
+    filesDiv.innerHTML = "⚠️ Masukkan username/repository";
+    return;
+  }
 
-h1 {
-  color: #1e88e5;
-}
+  filesDiv.innerHTML = "⏳ Loading...";
 
-input {
-  width: 80%;
-  padding: 10px;
-  margin: 10px 0;
-}
+  try {
+    const res = await fetch(`https://api.github.com/repos/${repo}/contents`);
+    const data = await res.json();
 
-button {
-  padding: 10px 20px;
-  background: #1e88e5;
-  color: white;
-  border: none;
-  border-radius: 5px;
-}
+    if (!Array.isArray(data)) {
+      filesDiv.innerHTML = "❌ Repo tidak ditemukan";
+      return;
+    }
 
-.file {
-  margin: 10px;
-  padding: 10px;
-  background: #f7f9fc;
-  border-radius: 5px;
-}
+    filesDiv.innerHTML = "";
 
-a {
-  color: #1e88e5;
-  text-decoration: none;
-  font-weight: bold;
+    data.forEach(file => {
+      if (file.type === "file") {
+        filesDiv.innerHTML += `
+          <div class="file">
+            <div class="file-name">📄 ${file.name}</div>
+            <a href="${file.download_url}" target="_blank">Download</a>
+          </div>
+        `;
+      }
+    });
+
+  } catch {
+    filesDiv.innerHTML = "❌ Gagal mengambil data";
+  }
 }
