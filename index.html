@@ -3,160 +3,178 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matcha Speed Test</title>
+<title>PANDI Speed Test</title>
 
 <style>
-:root {
-  --matcha-dark: #1f3d2b;
-  --matcha-main: #6fbf9b;
-  --matcha-light: #b7e4c7;
+:root{
+  --bg:#0f2f25;
+  --card:#123d30;
+  --accent:#7fd1ae;
+  --text:#eafff6;
+  --muted:#b7e4d0;
 }
 
-body {
-  margin: 0;
-  background: radial-gradient(circle at top, #2d6a4f, #081c15);
-  font-family: 'Segoe UI', sans-serif;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+*{
+  box-sizing:border-box;
+  font-family:system-ui,-apple-system,Segoe UI;
 }
 
-.card {
-  width: 360px;
-  background: rgba(0,0,0,0.35);
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 0 30px rgba(111,191,155,.5);
-  text-align: center;
+body{
+  margin:0;
+  min-height:100vh;
+  background:linear-gradient(180deg,#0b241c,#123d30);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  color:var(--text);
 }
 
-h1 {
-  color: var(--matcha-light);
-  margin-bottom: 10px;
-  letter-spacing: 2px;
+.card{
+  width:100%;
+  max-width:420px;
+  background:var(--card);
+  border-radius:22px;
+  padding:24px;
+  box-shadow:0 20px 40px rgba(0,0,0,.35);
 }
 
-.stats {
-  display: flex;
-  justify-content: space-between;
-  margin: 10px 0;
+h1{
+  text-align:center;
+  letter-spacing:2px;
+  margin:0 0 18px;
+  font-size:24px;
 }
 
-.stat {
-  font-size: 14px;
+.stats{
+  display:flex;
+  justify-content:space-between;
+  text-align:center;
+  margin-bottom:14px;
 }
 
-.stat span {
-  display: block;
-  font-size: 22px;
-  font-weight: bold;
-  color: var(--matcha-main);
+.stats div{
+  flex:1;
 }
 
-.gauge {
-  position: relative;
-  width: 260px;
-  height: 130px;
-  margin: 20px auto;
-  border-radius: 260px 260px 0 0;
-  background: linear-gradient(to right, #2d6a4f, #95d5b2);
-  overflow: hidden;
+.stats small{
+  display:block;
+  color:var(--muted);
+  font-size:12px;
 }
 
-.needle {
-  position: absolute;
-  width: 4px;
-  height: 110px;
-  background: white;
-  bottom: 0;
-  left: 50%;
-  transform-origin: bottom;
-  transform: rotate(-90deg);
-  transition: transform 1s ease-out;
+.stats b{
+  font-size:18px;
+  color:var(--accent);
 }
 
-.speed {
-  font-size: 26px;
-  color: var(--matcha-light);
+.speedometer{
+  width:100%;
+  max-width:280px;
+  height:140px;
+  margin:20px auto 8px;
+  background:radial-gradient(circle at bottom, #7fd1ae 0%, #2f6f5a 60%, transparent 61%);
+  border-radius:140px 140px 0 0;
+  position:relative;
+  overflow:hidden;
 }
 
-button {
-  margin-top: 15px;
-  padding: 10px 25px;
-  border: none;
-  border-radius: 25px;
-  background: var(--matcha-main);
-  color: #081c15;
-  font-weight: bold;
-  cursor: pointer;
+.needle{
+  position:absolute;
+  bottom:0;
+  left:50%;
+  width:4px;
+  height:100%;
+  background:white;
+  transform-origin:bottom center;
+  transform:rotate(-90deg);
+  transition:transform 1s ease;
 }
 
-button:hover {
-  background: var(--matcha-light);
+.speed-value{
+  text-align:center;
+  font-size:28px;
+  font-weight:bold;
+  margin-top:10px;
 }
 
-.miku {
-  margin-top: 15px;
+button{
+  width:100%;
+  margin-top:18px;
+  padding:14px;
+  border:none;
+  border-radius:16px;
+  font-size:16px;
+  font-weight:700;
+  background:var(--accent);
+  color:#0b241c;
+  cursor:pointer;
 }
 
-.miku img {
-  width: 100px;
-  filter: drop-shadow(0 0 10px #95d5b2);
+button:active{
+  transform:scale(.98);
+}
+
+.miku{
+  width:64px;
+  height:64px;
+  display:block;
+  margin:16px auto 0;
+  opacity:.85;
+}
+
+.footer{
+  text-align:center;
+  font-size:12px;
+  margin-top:6px;
+  color:var(--muted);
 }
 </style>
 </head>
 
 <body>
+
 <div class="card">
   <h1>SPEED TEST</h1>
 
   <div class="stats">
-    <div class="stat">PING<span id="ping">1 ms</span></div>
-    <div class="stat">DOWNLOAD<span id="down">0 Mbps</span></div>
-    <div class="stat">UPLOAD<span id="up">0 Mbps</span></div>
+    <div>
+      <small>PING</small>
+      <b id="ping">1 ms</b>
+    </div>
+    <div>
+      <small>DOWNLOAD</small>
+      <b id="down">0 Mbps</b>
+    </div>
+    <div>
+      <small>UPLOAD</small>
+      <b id="up">0 Mbps</b>
+    </div>
   </div>
 
-  <div class="gauge">
+  <div class="speedometer">
     <div class="needle" id="needle"></div>
   </div>
 
-  <div class="speed" id="speed">0 Mbps</div>
+  <div class="speed-value" id="speed">0 Mbps</div>
 
   <button onclick="startTest()">START TEST</button>
 
-  <div class="miku">
-    <img src="miku.png" alt="Hatsune Miku">
-  </div>
+  <img src="miku.png" class="miku" alt="Hatsune Miku">
+  <div class="footer">GitHub Pages · Matcha UI</div>
 </div>
 
 <script>
-function startTest() {
-  let maxSpeed = 6500;
-  let speed = 0;
+function startTest(){
+  let speed = Math.floor(Math.random()*80)+10;
+  document.getElementById("speed").innerText = speed + " Mbps";
+  document.getElementById("down").innerText = speed + " Mbps";
+  document.getElementById("up").innerText = Math.floor(speed/2) + " Mbps";
 
-  let interval = setInterval(() => {
-    speed += Math.random() * 400;
-    if (speed >= maxSpeed) {
-      speed = maxSpeed;
-      clearInterval(interval);
-    }
-
-    document.getElementById("speed").innerText =
-      speed.toFixed(2) + " Mbps";
-    document.getElementById("down").innerText =
-      speed.toFixed(2) + " Mbps";
-
-    let angle = (speed / maxSpeed) * 180 - 90;
-    document.getElementById("needle").style.transform =
-      `rotate(${angle}deg)`;
-  }, 80);
-
-  document.getElementById("ping").innerText = "1 ms";
-  document.getElementById("up").innerText =
-    (Math.random() * 900).toFixed(2) + " Mbps";
+  let deg = (speed / 100) * 180 - 90;
+  document.getElementById("needle").style.transform = `rotate(${deg}deg)`;
 }
 </script>
+
 </body>
 </html>
