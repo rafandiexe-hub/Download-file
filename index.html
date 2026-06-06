@@ -88,7 +88,7 @@
             position: relative;
             z-index: 1;
             width: 100%;
-            max-width: 560px;
+            max-width: 580px;
             padding: 20px;
         }
         .header {
@@ -100,7 +100,7 @@
             flex-wrap: wrap;
         }
         .header .brand {
-            font-size: 2.6rem;
+            font-size: 2.4rem;
             font-weight: 900;
             letter-spacing: 3px;
             background: linear-gradient(180deg, #ffe484 0%, #f4c542 30%, #d4a017 70%, #8b6508 100%);
@@ -116,7 +116,7 @@
             to { filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6)) drop-shadow(0 0 35px rgba(244,197,66,0.9)); }
         }
         .subtitle {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #c9a84c;
             letter-spacing: 5px;
             text-transform: uppercase;
@@ -127,7 +127,11 @@
             0%,100% { opacity: 0.8; }
             50% { opacity: 1; }
         }
-        .mute-btn {
+        .header-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        .mute-btn, .chat-btn {
             background: none;
             border: 2px solid #4a4a60;
             border-radius: 50%;
@@ -142,14 +146,15 @@
             transition: 0.2s;
             background: #1a1a30;
         }
-        .mute-btn:hover {
+        .mute-btn:hover, .chat-btn:hover {
             border-color: #f4c542;
             color: #f4c542;
             box-shadow: 0 0 12px rgba(244,197,66,0.4);
         }
-        .mute-btn.muted {
-            color: #666;
-            border-color: #444;
+        .mute-btn.muted, .chat-btn.active {
+            color: #f4c542;
+            border-color: #f4c542;
+            box-shadow: 0 0 15px rgba(244,197,66,0.6);
         }
         .machine-outer {
             position: relative;
@@ -312,6 +317,28 @@
             content: ''; position: absolute; top: 2px; left: 50%; transform: translateX(-50%);
             width: 60%; height: 3px; background: rgba(255,255,255,0.4); border-radius: 10px;
         }
+        .auto-spin-btn {
+            padding: 12px 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            border-radius: 30px;
+            cursor: pointer;
+            background: linear-gradient(180deg, #8e44ad, #6c3483);
+            border: none;
+            color: #fff;
+            box-shadow: 0 6px 20px rgba(142,68,173,0.5);
+            transition: all 0.2s;
+            font-size: 1rem;
+        }
+        .auto-spin-btn.active {
+            background: linear-gradient(180deg, #e67e22, #d35400);
+            box-shadow: 0 6px 25px rgba(230,126,34,0.7);
+            animation: pulseBtn 0.8s infinite alternate;
+        }
+        @keyframes pulseBtn {
+            from { box-shadow: 0 6px 25px rgba(230,126,34,0.7); }
+            to { box-shadow: 0 6px 40px rgba(230,126,34,1); }
+        }
         .quick-bets { display: flex; gap: 8px; justify-content: center; margin-top: 10px; flex-wrap: wrap; }
         .quick-bet {
             padding: 8px 16px; border-radius: 20px; border: 2px solid #3a3a55;
@@ -372,15 +399,131 @@
             border-radius: 20px; cursor: pointer; font-weight: 700; letter-spacing: 1px; transition: 0.2s;
         }
         .close-modal:hover { background: #c0392b; }
+        /* Chat Panel */
+        .chat-panel {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 340px;
+            max-width: 90vw;
+            height: 450px;
+            background: linear-gradient(135deg, #1a1a35, #12122a);
+            border: 2px solid #f4c542;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.8), 0 0 25px rgba(244,197,66,0.3);
+            display: none;
+            overflow: hidden;
+        }
+        .chat-panel.open { display: flex; }
+        .chat-header {
+            background: #0d0d1a;
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #2a2a3d;
+            font-weight: 700;
+            color: #f4c542;
+        }
+        .chat-close {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 1.3rem;
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 12px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            color: #ddd;
+            font-size: 0.85rem;
+        }
+        .chat-bubble {
+            max-width: 85%;
+            padding: 10px 14px;
+            border-radius: 14px;
+            word-break: break-word;
+            line-height: 1.4;
+        }
+        .chat-bubble.user {
+            background: #2c3e50;
+            align-self: flex-end;
+            color: #fff;
+        }
+        .chat-bubble.cs {
+            background: #2a2a40;
+            align-self: flex-start;
+            border: 1px solid #3a3a55;
+        }
+        .chat-input-area {
+            padding: 12px;
+            border-top: 1px solid #2a2a3d;
+            display: flex;
+            gap: 8px;
+        }
+        .chat-input-area input {
+            flex:1;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #3a3a55;
+            background: #0d0d1a;
+            color: #fff;
+            outline: none;
+        }
+        .chat-input-area button {
+            background: #f4c542;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            color: #000;
+            font-weight: bold;
+        }
+        .api-key-section {
+            padding: 8px 12px;
+            display: flex;
+            gap: 6px;
+            background: #0d0d1a;
+            border-bottom: 1px solid #2a2a3d;
+            font-size: 0.7rem;
+            align-items: center;
+            color: #aaa;
+        }
+        .api-key-section input {
+            flex:1;
+            background: #12122a;
+            border: 1px solid #3a3a55;
+            padding: 6px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 0.7rem;
+        }
+        .api-key-section button {
+            background: #27ae60;
+            border: none;
+            color: #fff;
+            border-radius: 10px;
+            padding: 6px 10px;
+            cursor: pointer;
+            font-size: 0.7rem;
+        }
         @media (max-width: 480px) {
             .reel { width: 80px; height: 80px; font-size: 2.8rem; }
             .reels { gap: 6px; }
             .spin-btn { padding: 12px 24px; font-size: 1rem; }
             .header .brand { font-size: 1.8rem; }
             .balance-value { font-size: 1.2rem; }
-            .balance-value.credit { font-size: 1.4rem; }
             .fullscreen-win .win-text { font-size: 3rem; }
-            .fullscreen-win .win-amount { font-size: 2rem; }
+            .chat-panel { width: 300px; height: 400px; bottom: 10px; right: 10px; }
         }
     </style>
 </head>
@@ -389,7 +532,10 @@
     <div class="container">
         <div class="header">
             <div class="brand">MuaniBet789</div>
-            <button class="mute-btn" id="muteButton" title="Suara">🔊</button>
+            <div class="header-buttons">
+                <button class="chat-btn" id="chatButton" title="Chat CS">💬</button>
+                <button class="mute-btn" id="muteButton" title="Suara">🔊</button>
+            </div>
             <div class="subtitle">✨ Mega Slot ✨</div>
         </div>
         <div class="machine-outer">
@@ -437,6 +583,7 @@
                         <button class="bet-btn" id="betPlus">+</button>
                     </div>
                     <button class="spin-btn" id="spinButton">🎰 PUTAR</button>
+                    <button class="auto-spin-btn" id="autoSpinButton">🔄 AUTO SPIN</button>
                 </div>
                 <div class="quick-bets">
                     <button class="quick-bet" data-bet="100">100</button>
@@ -461,6 +608,8 @@
             </div>
         </div>
     </div>
+
+    <!-- Top Up Modal -->
     <div class="modal-overlay" id="topupModal" style="display: none;">
         <div class="modal">
             <h3>💰 Isi Saldo</h3>
@@ -475,6 +624,26 @@
             <button class="close-modal" id="closeModal">Tutup</button>
         </div>
     </div>
+
+    <!-- Chat Panel dengan API Key bawaan -->
+    <div class="chat-panel" id="chatPanel">
+        <div class="chat-header">
+            <span>💬 CS MuaniBet789</span>
+            <button class="chat-close" id="chatClose">✕</button>
+        </div>
+        <div class="api-key-section">
+            <input type="text" id="apiKeyInput" placeholder="API Key (default terisi)">
+            <button id="saveApiKey">Simpan</button>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-bubble cs">Halo! Saya CS MuaniBet789. Ada yang bisa dibantu?</div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chatInput" placeholder="Ketik pesan...">
+            <button id="sendChat">➤</button>
+        </div>
+    </div>
+
     <script>
         (function() {
             const SYMBOLS = ['🍒','🍋','🍊','🍇','💎','⭐','🔔','7️⃣','👑'];
@@ -486,25 +655,18 @@
             let spinIntervals = [null,null,null];
             let stopCount = 0;
             let muted = false;
+            let autoSpinActive = false;
+            let autoSpinTimeout = null;
 
             // Audio
             let audioCtx = null;
             let spinNoiseNode = null;
-            let spinNoiseGain = null;
 
             function initAudio() {
                 if (audioCtx) return;
-                try {
-                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                } catch(e) {
-                    console.warn('Audio tidak didukung');
-                }
+                try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); } catch(e) {}
             }
-
-            function resumeAudio() {
-                if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-            }
-
+            function resumeAudio() { if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume(); }
             function playTone(freq, duration, type='sine', vol=0.3, delay=0) {
                 if (!audioCtx || muted) return;
                 const now = audioCtx.currentTime + delay;
@@ -514,125 +676,69 @@
                 osc.frequency.setValueAtTime(freq, now);
                 gain.gain.setValueAtTime(vol, now);
                 gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(now);
-                osc.stop(now + duration);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(now); osc.stop(now + duration);
             }
-
-            function playClickSound() {
-                playTone(800, 0.08, 'sine', 0.15);
-            }
-
+            function playClickSound() { playTone(800, 0.08, 'sine', 0.15); }
             function startSpinSound() {
                 if (!audioCtx || muted) return;
                 stopSpinSound();
                 const bufferSize = 2 * audioCtx.sampleRate;
                 const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
                 const data = buffer.getChannelData(0);
-                for (let i = 0; i < bufferSize; i++) {
-                    data[i] = Math.random() * 2 - 1;
-                }
+                for (let i=0;i<bufferSize;i++) data[i] = Math.random()*2-1;
                 const source = audioCtx.createBufferSource();
-                source.buffer = buffer;
-                source.loop = true;
+                source.buffer = buffer; source.loop = true;
                 const filter = audioCtx.createBiquadFilter();
-                filter.type = 'bandpass';
-                filter.frequency.value = 1800;
-                filter.Q.value = 0.8;
-                const gain = audioCtx.createGain();
-                gain.gain.value = 0.25;
-                source.connect(filter);
-                filter.connect(gain);
-                gain.connect(audioCtx.destination);
+                filter.type = 'bandpass'; filter.frequency.value = 1800; filter.Q.value = 0.8;
+                const gain = audioCtx.createGain(); gain.gain.value = 0.25;
+                source.connect(filter); filter.connect(gain); gain.connect(audioCtx.destination);
                 source.start();
                 spinNoiseNode = source;
-                spinNoiseGain = gain;
             }
-
             function stopSpinSound() {
                 if (spinNoiseNode) {
                     try { spinNoiseNode.stop(); } catch(e) {}
-                    spinNoiseNode.disconnect();
-                    spinNoiseNode = null;
-                }
-                if (spinNoiseGain) {
-                    spinNoiseGain.disconnect();
-                    spinNoiseGain = null;
+                    spinNoiseNode.disconnect(); spinNoiseNode = null;
                 }
             }
-
-            function playStopTick() {
-                playTone(1100, 0.06, 'square', 0.2);
-            }
-
+            function playStopTick() { playTone(1100, 0.06, 'square', 0.2); }
             function playWinSound() {
-                const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
-                notes.forEach((freq, i) => {
-                    playTone(freq, 0.25, 'sine', 0.35, i * 0.12);
-                });
-                setTimeout(() => {
-                    playTone(1046.5, 0.6, 'sine', 0.4, 0);
-                }, notes.length * 120);
+                [523.25, 659.25, 783.99].forEach((f,i) => playTone(f,0.25,'sine',0.35,i*0.12));
+                setTimeout(() => playTone(1046.5,0.6,'sine',0.4,0), 400);
             }
-
             function playJackpotSound() {
-                const melody = [523.25, 587.33, 659.25, 783.99, 1046.5];
-                melody.forEach((freq, i) => {
-                    playTone(freq, 0.3, 'sine', 0.5, i * 0.1);
-                });
-                setTimeout(() => {
-                    for (let i=0; i<3; i++) {
-                        playTone(1318.5, 0.5, 'triangle', 0.7, i*0.2);
-                    }
-                }, melody.length * 100 + 100);
+                [523.25,587.33,659.25,783.99,1046.5].forEach((f,i) => playTone(f,0.3,'sine',0.5,i*0.1));
+                setTimeout(() => { for(let i=0;i<3;i++) playTone(1318.5,0.5,'triangle',0.7,i*0.2); }, 700);
             }
 
             function updateMuteButton() {
                 const btn = document.getElementById('muteButton');
                 btn.textContent = muted ? '🔇' : '🔊';
-                if (muted) {
-                    btn.classList.add('muted');
-                    stopSpinSound();
-                } else {
-                    btn.classList.remove('muted');
-                }
+                btn.classList.toggle('muted', muted);
+                if (muted) stopSpinSound();
             }
 
-            // DOM Elements
             const balanceDisplay = document.getElementById('balanceDisplay');
             const betDisplay = document.getElementById('betDisplay');
             const winDisplay = document.getElementById('winDisplay');
             const winMessage = document.getElementById('winMessage');
             const betAmountDisplay = document.getElementById('betAmountDisplay');
             const spinButton = document.getElementById('spinButton');
-            const betMinusBtn = document.getElementById('betMinus');
-            const betPlusBtn = document.getElementById('betPlus');
+            const autoSpinButton = document.getElementById('autoSpinButton');
             const reelElements = [
-                document.getElementById('reel0'),
-                document.getElementById('reel1'),
-                document.getElementById('reel2')
+                document.getElementById('reel0'), document.getElementById('reel1'), document.getElementById('reel2')
             ];
-            const quickBetButtons = document.querySelectorAll('.quick-bet');
-            const topupButton = document.getElementById('topupButton');
-            const topupModal = document.getElementById('topupModal');
-            const closeModal = document.getElementById('closeModal');
-            const topupOptions = document.querySelectorAll('.topup-option');
-            const muteButton = document.getElementById('muteButton');
 
             function formatRupiah(angka) { return 'Rp ' + angka.toLocaleString('id-ID'); }
-
             function updateUI() {
                 balanceDisplay.textContent = formatRupiah(balance);
                 betDisplay.textContent = formatRupiah(bet);
                 betAmountDisplay.textContent = formatRupiah(bet);
-                quickBetButtons.forEach(btn => {
-                    btn.classList.toggle('active', parseInt(btn.dataset.bet) === bet);
-                });
+                document.querySelectorAll('.quick-bet').forEach(b => b.classList.toggle('active', parseInt(b.dataset.bet)===bet));
                 spinButton.disabled = (balance < bet || isSpinning);
-                betMinusBtn.disabled = isSpinning;
-                betPlusBtn.disabled = isSpinning;
-                quickBetButtons.forEach(b => b.disabled = isSpinning);
+                document.querySelectorAll('.quick-bet, #betMinus, #betPlus').forEach(b => b.disabled = isSpinning);
+                autoSpinButton.disabled = isSpinning || balance < bet;
             }
 
             function setWinMessage(text, type) {
@@ -641,15 +747,10 @@
                 if (type) winMessage.classList.add(type);
             }
 
-            function clearReelEffects() {
-                reelElements.forEach(el => el.classList.remove('winner-reel','jackpot-reel'));
-            }
-
-            function getRandomSymbol() { return SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)]; }
-
+            function clearReelEffects() { reelElements.forEach(el => el.classList.remove('winner-reel','jackpot-reel')); }
+            function getRandomSymbol() { return SYMBOLS[Math.floor(Math.random()*SYMBOLS.length)]; }
             function spinAllReels() { reelElements.forEach(el => el.classList.add('spinning')); }
-
-            function updateReelVisual(index) { reelElements[index].textContent = getRandomSymbol(); }
+            function updateReelVisual(i) { reelElements[i].textContent = getRandomSymbol(); }
 
             function stopReel(index, finalSymbol) {
                 if (spinIntervals[index]) { clearInterval(spinIntervals[index]); spinIntervals[index] = null; }
@@ -678,11 +779,9 @@
                 amountEl.className = 'win-amount';
                 amountEl.textContent = formatRupiah(winAmount);
                 const symbolEl = document.createElement('div');
-                symbolEl.style.fontSize = '4rem';
+                symbolEl.style.fontSize='4rem';
                 symbolEl.textContent = symbol;
-                content.appendChild(symbolEl);
-                content.appendChild(winText);
-                content.appendChild(amountEl);
+                content.append(symbolEl, winText, amountEl);
                 overlay.appendChild(content);
                 document.body.appendChild(overlay);
                 spawnConfetti(80);
@@ -691,14 +790,13 @@
 
             function spawnConfetti(count) {
                 const colors = ['#ff0','#f00','#0f0','#00f','#ff4500','#ffd700','#ff69b4','#00ffff'];
-                for (let i=0; i<count; i++) {
+                for (let i=0;i<count;i++) {
                     const confetti = document.createElement('div');
                     confetti.className = 'confetti';
                     confetti.style.left = Math.random()*100+'%';
                     confetti.style.background = colors[Math.floor(Math.random()*colors.length)];
                     confetti.style.animationDuration = (Math.random()*2+2)+'s';
-                    confetti.style.width = (Math.random()*10+5)+'px';
-                    confetti.style.height = confetti.style.width;
+                    confetti.style.width = confetti.style.height = (Math.random()*10+5)+'px';
                     document.body.appendChild(confetti);
                     setTimeout(() => confetti.remove(), 4000);
                 }
@@ -712,23 +810,21 @@
                 clearReelEffects();
                 updateUI();
                 const [r0,r1,r2] = currentReels;
-                if (r0 === r1 && r1 === r2) {
-                    const symbol = r0;
-                    const multiplier = PAYOUTS[symbol];
-                    const winAmount = bet * multiplier;
-                    balance += winAmount;
-                    winDisplay.textContent = formatRupiah(winAmount);
+                if (r0===r1 && r1===r2) {
+                    const sym = r0, mult = PAYOUTS[sym], win = bet * mult;
+                    balance += win;
+                    winDisplay.textContent = formatRupiah(win);
                     winDisplay.style.color = '#4ecb71';
-                    if (symbol === '👑') {
+                    if (sym === '👑') {
                         reelElements.forEach(el => el.classList.add('jackpot-reel'));
-                        setWinMessage(`🎉 JACKPOT! x${multiplier} = ${formatRupiah(winAmount)}`, 'jackpot');
+                        setWinMessage(`🎉 JACKPOT! x${mult} = ${formatRupiah(win)}`, 'jackpot');
                         playJackpotSound();
-                        showFullscreenWin(symbol, winAmount, true);
+                        showFullscreenWin(sym, win, true);
                     } else {
                         reelElements.forEach(el => el.classList.add('winner-reel'));
-                        setWinMessage(`✨ Menang! x${multiplier} = ${formatRupiah(winAmount)}`, 'win');
+                        setWinMessage(`✨ Menang! x${mult} = ${formatRupiah(win)}`, 'win');
                         playWinSound();
-                        showFullscreenWin(symbol, winAmount, false);
+                        showFullscreenWin(sym, win, false);
                     }
                 } else {
                     winDisplay.textContent = 'Rp 0';
@@ -736,13 +832,25 @@
                     setWinMessage('😔 Coba lagi!', 'lose');
                 }
                 updateUI();
+
+                if (autoSpinActive) {
+                    if (balance >= bet) {
+                        autoSpinTimeout = setTimeout(startSpin, 1200);
+                    } else {
+                        stopAutoSpin();
+                        setWinMessage('❌ Saldo habis! Auto Spin berhenti.', 'lose');
+                    }
+                }
             }
 
             function startSpin() {
                 if (isSpinning) return;
-                if (balance < bet) { setWinMessage('❌ Saldo tidak cukup!', 'lose'); return; }
-                resumeAudio();
-                initAudio();
+                if (balance < bet) {
+                    setWinMessage('❌ Saldo tidak cukup!', 'lose');
+                    if (autoSpinActive) stopAutoSpin();
+                    return;
+                }
+                resumeAudio(); initAudio();
                 balance -= bet;
                 winDisplay.textContent = 'Rp 0';
                 winDisplay.style.color = '#888';
@@ -751,14 +859,32 @@
                 updateUI();
                 isSpinning = true;
                 stopCount = 0;
-                spinButton.disabled = true;
                 startSpinSound();
                 const finalSymbols = [getRandomSymbol(), getRandomSymbol(), getRandomSymbol()];
                 spinAllReels();
-                for (let i=0; i<3; i++) {
+                for (let i=0;i<3;i++) {
                     spinIntervals[i] = setInterval(() => updateReelVisual(i), 60);
                     setTimeout(() => stopReel(i, finalSymbols[i]), 800 + i*600);
                 }
+            }
+
+            function startAutoSpin() {
+                autoSpinActive = true;
+                autoSpinButton.textContent = '⏹ STOP AUTO';
+                autoSpinButton.classList.add('active');
+                if (!isSpinning && balance >= bet) startSpin();
+            }
+
+            function stopAutoSpin() {
+                autoSpinActive = false;
+                if (autoSpinTimeout) clearTimeout(autoSpinTimeout);
+                autoSpinButton.textContent = '🔄 AUTO SPIN';
+                autoSpinButton.classList.remove('active');
+            }
+
+            function toggleAutoSpin() {
+                if (autoSpinActive) stopAutoSpin();
+                else startAutoSpin();
             }
 
             function changeBet(amount) {
@@ -775,44 +901,114 @@
                 if (idx === -1) idx = steps.length-1;
                 idx = Math.min(steps.length-1, Math.max(0, idx+delta));
                 let newBet = steps[idx];
-                if (newBet > balance) {
-                    for (let i=steps.length-1; i>=0; i--) { if (steps[i] <= balance) { newBet = steps[i]; break; } }
-                }
+                if (newBet > balance) for (let i=steps.length-1;i>=0;i--) if (steps[i] <= balance) { newBet = steps[i]; break; }
                 bet = Math.max(100, newBet);
                 updateUI();
             }
 
-            function openTopupModal() { topupModal.style.display = 'flex'; playClickSound(); }
-            function closeTopupModal() { topupModal.style.display = 'none'; }
-            function handleTopup(amount) {
-                balance += amount;
-                updateUI();
-                closeTopupModal();
-                setWinMessage(`💰 Saldo bertambah ${formatRupiah(amount)}!`, 'win');
-                spawnConfetti(30);
-                playClickSound();
+            // --- Chat dengan Gemini (API Key Agnes AI default) ---
+            const chatPanel = document.getElementById('chatPanel');
+            const chatMessages = document.getElementById('chatMessages');
+            const chatInput = document.getElementById('chatInput');
+            const sendChat = document.getElementById('sendChat');
+            const apiKeyInput = document.getElementById('apiKeyInput');
+            const saveApiKeyBtn = document.getElementById('saveApiKey');
+
+            // Default API Key dari Agnes AI
+            const DEFAULT_API_KEY = 'sk-dsGOycyN686mNQsFWuEs6w3VdeLhKdL3DnxqVI4vAtM6r0s7';
+            let geminiApiKey = localStorage.getItem('muani_gemini_key') || DEFAULT_API_KEY;
+            // Simpan ke localStorage agar selalu tersedia
+            localStorage.setItem('muani_gemini_key', geminiApiKey);
+            apiKeyInput.value = geminiApiKey;
+
+            function appendMessage(text, sender) {
+                const div = document.createElement('div');
+                div.className = `chat-bubble ${sender}`;
+                div.textContent = text;
+                chatMessages.appendChild(div);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
             }
+
+            async function sendToGemini(message) {
+                if (!geminiApiKey) return "Maaf, API Key belum diatur. Masukkan Gemini API Key Anda.";
+                try {
+                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flat:generateContent?key=${geminiApiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: `Kamu adalah customer service ramah dari situs slot MuaniBet789. Bantu user dengan pertanyaan seputar permainan, saldo, top up, dan masalah teknis. User bilang: ${message}` }] }]
+                        })
+                    });
+                    const data = await res.json();
+                    return data?.candidates?.[0]?.content?.parts?.[0]?.text || "Maaf, saya tidak mengerti.";
+                } catch(e) {
+                    return "Gagal menghubungi AI. Periksa API key atau koneksi.";
+                }
+            }
+
+            async function handleChatSend() {
+                const text = chatInput.value.trim();
+                if (!text) return;
+                appendMessage(text, 'user');
+                chatInput.value = '';
+                appendMessage('...', 'cs');
+                const reply = await sendToGemini(text);
+                chatMessages.lastChild.remove();
+                appendMessage(reply, 'cs');
+            }
+
+            saveApiKeyBtn.addEventListener('click', () => {
+                geminiApiKey = apiKeyInput.value.trim();
+                localStorage.setItem('muani_gemini_key', geminiApiKey);
+                appendMessage('✅ API Key disimpan!', 'cs');
+            });
+
+            sendChat.addEventListener('click', handleChatSend);
+            chatInput.addEventListener('keypress', (e) => { if (e.key==='Enter') handleChatSend(); });
+
+            document.getElementById('chatButton').addEventListener('click', () => {
+                chatPanel.classList.toggle('open');
+                document.getElementById('chatButton').classList.toggle('active');
+            });
+            document.getElementById('chatClose').addEventListener('click', () => {
+                chatPanel.classList.remove('open');
+                document.getElementById('chatButton').classList.remove('active');
+            });
 
             // Event Listeners
             spinButton.addEventListener('click', () => { playClickSound(); startSpin(); });
-            betMinusBtn.addEventListener('click', () => { playClickSound(); adjustBet(-1); });
-            betPlusBtn.addEventListener('click', () => { playClickSound(); adjustBet(1); });
-            quickBetButtons.forEach(btn => {
+            autoSpinButton.addEventListener('click', toggleAutoSpin);
+            document.getElementById('betMinus').addEventListener('click', () => { playClickSound(); adjustBet(-1); });
+            document.getElementById('betPlus').addEventListener('click', () => { playClickSound(); adjustBet(1); });
+            document.querySelectorAll('.quick-bet').forEach(btn => {
                 btn.addEventListener('click', () => {
                     playClickSound();
                     if (isSpinning) return;
-                    const amount = parseInt(btn.dataset.bet);
-                    if (amount <= balance) changeBet(amount);
-                    else { setWinMessage('❌ Saldo tidak cukup', 'lose'); setTimeout(() => setWinMessage('',''), 1500); }
+                    changeBet(parseInt(btn.dataset.bet));
                 });
             });
-            topupButton.addEventListener('click', openTopupModal);
-            closeModal.addEventListener('click', closeTopupModal);
-            topupModal.addEventListener('click', (e) => { if (e.target === topupModal) closeTopupModal(); });
-            topupOptions.forEach(opt => opt.addEventListener('click', () => {
-                handleTopup(parseInt(opt.dataset.amount));
-            }));
-            muteButton.addEventListener('click', () => {
+            document.getElementById('topupButton').addEventListener('click', () => {
+                document.getElementById('topupModal').style.display = 'flex';
+                playClickSound();
+            });
+            document.getElementById('closeModal').addEventListener('click', () => {
+                document.getElementById('topupModal').style.display = 'none';
+            });
+            document.getElementById('topupModal').addEventListener('click', (e) => {
+                if (e.target === document.getElementById('topupModal')) document.getElementById('topupModal').style.display = 'none';
+            });
+            document.querySelectorAll('.topup-option').forEach(opt => {
+                opt.addEventListener('click', () => {
+                    const amount = parseInt(opt.dataset.amount);
+                    balance += amount;
+                    updateUI();
+                    document.getElementById('topupModal').style.display = 'none';
+                    setWinMessage(`💰 Saldo bertambah ${formatRupiah(amount)}!`, 'win');
+                    spawnConfetti(30);
+                    playClickSound();
+                });
+            });
+            document.getElementById('muteButton').addEventListener('click', () => {
                 muted = !muted;
                 updateMuteButton();
                 if (muted) stopSpinSound();
@@ -820,37 +1016,35 @@
             });
             document.addEventListener('keydown', (e) => {
                 if (e.code === 'Space' && !isSpinning && balance >= bet) {
-                    e.preventDefault();
-                    playClickSound();
-                    startSpin();
+                    e.preventDefault(); playClickSound(); startSpin();
                 }
                 if (e.code === 'ArrowLeft' && !isSpinning) { e.preventDefault(); adjustBet(-1); playClickSound(); }
                 if (e.code === 'ArrowRight' && !isSpinning) { e.preventDefault(); adjustBet(1); playClickSound(); }
-                if (e.key === 'Escape') closeTopupModal();
+                if (e.key === 'Escape') {
+                    document.getElementById('topupModal').style.display = 'none';
+                    chatPanel.classList.remove('open');
+                }
             });
 
             // Particles
             function createParticles() {
                 const container = document.getElementById('particles');
-                for (let i=0; i<40; i++) {
+                for (let i=0;i<40;i++) {
                     const p = document.createElement('div');
                     p.className = 'particle';
                     p.style.left = Math.random()*100+'%';
                     p.style.top = Math.random()*100+'%';
-                    p.style.width = (Math.random()*4+2)+'px';
-                    p.style.height = p.style.width;
+                    p.style.width = p.style.height = (Math.random()*4+2)+'px';
                     p.style.animationDuration = (Math.random()*15+10)+'s';
                     p.style.animationDelay = Math.random()*10+'s';
                     container.appendChild(p);
                 }
             }
             createParticles();
-
             updateUI();
             setWinMessage('🎰 Siap bermain! Tekan PUTAR', '');
             updateMuteButton();
-            console.log('🎰 MuaniBet789 siap dengan suara!');
         })();
     </script>
 </body>
-                                                                  </html>
+                        </html>
