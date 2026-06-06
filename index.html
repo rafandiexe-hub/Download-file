@@ -1,223 +1,856 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Matcha Speed Test</title>
-
-<style>
-:root {
-  --bg1:#081c15;
-  --bg2:#1b4332;
-  --card:#163a2b;
-  --accent:#95d5b2;
-  --text:#e9f5ef;
-}
-
-*{box-sizing:border-box}
-
-body{
-  margin:0;
-  height:100vh;
-  background:radial-gradient(circle at top,var(--bg2),var(--bg1));
-  font-family:system-ui;
-  color:var(--text);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.card{
-  width:360px;
-  background:var(--card);
-  border-radius:22px;
-  padding:20px;
-  box-shadow:0 0 30px rgba(149,213,178,.35);
-  text-align:center;
-}
-
-h1{
-  margin:5px 0 15px;
-  letter-spacing:3px;
-}
-
-.stats{
-  display:flex;
-  justify-content:space-between;
-  margin-bottom:15px;
-}
-
-.stat{
-  font-size:13px;
-}
-.stat span{
-  display:block;
-  font-size:22px;
-  font-weight:700;
-  color:var(--accent);
-}
-
-.gauge{
-  position:relative;
-  width:260px;
-  height:130px;
-  margin:15px auto;
-  border-radius:260px 260px 0 0;
-  background:linear-gradient(90deg,#2d6a4f,#b7e4c7);
-  overflow:hidden;
-}
-
-.needle{
-  position:absolute;
-  bottom:0;
-  left:50%;
-  width:4px;
-  height:115px;
-  background:#fff;
-  transform-origin:bottom;
-  transform:rotate(-90deg);
-  transition:transform .2s linear;
-}
-
-.speed{
-  font-size:28px;
-  font-weight:700;
-  margin:10px 0;
-}
-
-.progress{
-  height:4px;
-  background:rgba(255,255,255,.2);
-  border-radius:4px;
-  overflow:hidden;
-}
-.bar{
-  width:0%;
-  height:100%;
-  background:var(--accent);
-  transition:width .2s linear;
-}
-
-button{
-  margin-top:14px;
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:16px;
-  background:var(--accent);
-  font-weight:700;
-  cursor:pointer;
-}
-
-button:disabled{
-  opacity:.6;
-}
-
-.miku{
-  margin-top:12px;
-}
-.miku img{
-  width:80px;
-  filter:drop-shadow(0 0 10px #95d5b2);
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎰 MuaniBet789 - Slot Simulator</title>
+    <style>
+        :root {
+            --bg: #0a0a0f;
+            --gold: #f4c542;
+            --gold-dark: #b8960c;
+            --red: #e63946;
+            --red-dark: #9b1d20;
+            --panel: #1a1a2e;
+            --panel-light: #252540;
+            --text: #e0d6c2;
+            --text-bright: #fff8e7;
+            --win-glow: #ffd700;
+            --jackpot-glow: #ff4500;
+            --neon-pink: #ff007f;
+            --neon-blue: #00f0ff;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: radial-gradient(ellipse at center, #1a1a2e 0%, #0a0a0f 70%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            overflow-x: hidden;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            position: relative;
+        }
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: floatParticle linear infinite;
+            opacity: 0;
+        }
+        @keyframes floatParticle {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.2; }
+            100% { transform: translateY(-110vh) scale(0.3); opacity: 0; }
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 900px;
+            height: 900px;
+            background: radial-gradient(circle, rgba(244, 197, 66, 0.07) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
+        }
+        body::after {
+            content: '';
+            position: fixed;
+            top: -200px;
+            left: -200px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 0, 127, 0.05) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+            border-radius: 50%;
+        }
+        .container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 560px;
+            padding: 20px;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+        .header .brand {
+            font-size: 2.6rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            background: linear-gradient(180deg, #ffe484 0%, #f4c542 30%, #d4a017 70%, #8b6508 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6)) drop-shadow(0 0 20px rgba(244,197,66,0.5));
+            line-height: 1.1;
+            animation: brandGlow 2s ease-in-out infinite alternate;
+        }
+        @keyframes brandGlow {
+            from { filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6)) drop-shadow(0 0 20px rgba(244,197,66,0.5)); }
+            to { filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6)) drop-shadow(0 0 35px rgba(244,197,66,0.9)); }
+        }
+        .subtitle {
+            font-size: 0.9rem;
+            color: #c9a84c;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-weight: 600;
+            animation: subtitlePulse 1.5s ease-in-out infinite;
+        }
+        @keyframes subtitlePulse {
+            0%,100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+        .mute-btn {
+            background: none;
+            border: 2px solid #4a4a60;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.3rem;
+            color: #ccc;
+            transition: 0.2s;
+            background: #1a1a30;
+        }
+        .mute-btn:hover {
+            border-color: #f4c542;
+            color: #f4c542;
+            box-shadow: 0 0 12px rgba(244,197,66,0.4);
+        }
+        .mute-btn.muted {
+            color: #666;
+            border-color: #444;
+        }
+        .machine-outer {
+            position: relative;
+            padding: 4px;
+            border-radius: 28px;
+            background: linear-gradient(45deg, #ff007f, #f4c542, #00f0ff, #ff007f, #f4c542, #00f0ff);
+            background-size: 400% 400%;
+            animation: ledFlow 5s linear infinite;
+            box-shadow: 0 0 40px rgba(244,197,66,0.4), 0 20px 60px rgba(0,0,0,0.8);
+        }
+        @keyframes ledFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .machine {
+            background: linear-gradient(180deg, #1c1c35 0%, #12121f 100%);
+            border-radius: 24px;
+            padding: 24px 20px 20px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 0 2px rgba(244,197,66,0.15) inset;
+        }
+        .machine::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 8px;
+            background: linear-gradient(90deg, transparent, #ffd700, transparent);
+            border-radius: 10px;
+            opacity: 0.8;
+            animation: topLight 2s ease-in-out infinite;
+        }
+        @keyframes topLight {
+            0%,100% { opacity: 0.5; }
+            50% { opacity: 1; }
+        }
+        .balance-panel {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #0d0d1a;
+            border: 2px solid #2a2a3d;
+            border-radius: 14px;
+            padding: 14px 18px;
+            margin-bottom: 16px;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .balance-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .balance-icon { font-size: 1.8rem; }
+        .balance-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: #999; }
+        .balance-value { font-size: 1.5rem; font-weight: 800; color: var(--text-bright); letter-spacing: 1px; }
+        .balance-value.credit { color: #f4c542; font-size: 1.8rem; }
+        .divider { width: 1px; height: 30px; background: #2a2a3d; }
+        .topup-btn {
+            background: linear-gradient(180deg, #2ecc71, #27ae60);
+            border: none;
+            color: white;
+            font-weight: 700;
+            padding: 10px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(46,204,113,0.4);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .topup-btn:hover { box-shadow: 0 8px 25px rgba(46,204,113,0.7); transform: translateY(-2px); }
+        .topup-btn:active { transform: scale(0.95); }
+        .win-message {
+            text-align: center;
+            min-height: 36px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+            color: transparent;
+        }
+        .win-message.win { color: #ffd700; animation: winPulse 0.6s ease-in-out; text-shadow: 0 0 20px rgba(255,215,0,0.7); }
+        .win-message.jackpot { color: #ff4500; font-size: 1.4rem; animation: jackpotFlash 0.4s ease-in-out 3; text-shadow: 0 0 30px rgba(255,69,0,0.9), 0 0 60px rgba(255,215,0,0.5); }
+        .win-message.lose { color: #888; }
+        @keyframes winPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.15)} }
+        @keyframes jackpotFlash { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.25);opacity:0.7} }
+        .reels-container {
+            background: #0a0a14;
+            border: 3px solid #2e2e45;
+            border-radius: 16px;
+            padding: 12px;
+            margin-bottom: 14px;
+            box-shadow: inset 0 8px 30px rgba(0,0,0,0.7), 0 0 25px rgba(244,197,66,0.15);
+            position: relative;
+        }
+        .reels-container::after {
+            content: '';
+            position: absolute;
+            top:0;left:0;right:0;bottom:0;
+            border-radius: 14px;
+            pointer-events: none;
+            box-shadow: inset 0 0 80px rgba(0,0,0,0.5);
+        }
+        .reels { display: flex; gap: 10px; justify-content: center; position: relative; z-index: 1; }
+        .reel {
+            width: 120px; height: 120px;
+            background: #111122;
+            border: 2px solid #3a3a55;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.8rem;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.1s ease-out, box-shadow 0.3s;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+        }
+        .reel.spinning { animation: reelBlur 0.08s linear infinite; box-shadow: 0 0 30px rgba(244,197,66,0.4); border-color: #f4c542; }
+        .reel.stopping { animation: reelBrake 0.4s ease-out forwards; }
+        .reel.winner-reel { box-shadow: 0 0 40px rgba(255,215,0,0.8), 0 0 80px rgba(255,215,0,0.3)!important; border-color: #ffd700!important; animation: winnerGlow 0.6s ease-in-out infinite alternate; }
+        .reel.jackpot-reel { box-shadow: 0 0 50px rgba(255,69,0,0.9), 0 0 100px rgba(255,215,0,0.5)!important; border-color: #ff4500!important; animation: jackpotReelGlow 0.3s ease-in-out infinite alternate; }
+        @keyframes reelBlur { 0%{filter:blur(1px)} 100%{filter:blur(3px)} }
+        @keyframes reelBrake { 0%{filter:blur(3px);transform:translateY(-5px)} 60%{filter:blur(0px);transform:translateY(3px)} 100%{filter:blur(0px);transform:translateY(0)} }
+        @keyframes winnerGlow { from{box-shadow:0 0 30px rgba(255,215,0,0.6)} to{box-shadow:0 0 60px rgba(255,215,0,1),0 0 100px rgba(255,215,0,0.4)} }
+        @keyframes jackpotReelGlow { from{box-shadow:0 0 40px rgba(255,69,0,0.8)} to{box-shadow:0 0 70px rgba(255,69,0,1),0 0 120px rgba(255,215,0,0.7)} }
+        .payline-indicator { text-align: center; font-size: 0.75rem; color: #666; letter-spacing: 2px; margin-top: 6px; text-transform: uppercase; }
+        .payline-indicator span { color: #f4c542; font-weight: 700; }
+        .controls { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: center; }
+        .bet-group { display: flex; align-items: center; gap: 6px; background: #0d0d1a; border-radius: 25px; padding: 6px 6px 6px 14px; border: 2px solid #2a2a3d; }
+        .bet-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: #999; }
+        .bet-btn {
+            width: 34px; height: 34px; border-radius: 50%; border: 2px solid #4a4a60;
+            background: #1a1a30; color: #fff; cursor: pointer; font-size: 1.2rem; font-weight: 700;
+            transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+        }
+        .bet-btn:hover { background: #2a2a45; border-color: #f4c542; color: #f4c542; }
+        .bet-btn:active { transform: scale(0.9); background: #f4c542; color: #000; }
+        .bet-amount { font-weight: 800; font-size: 1.1rem; color: #f4c542; min-width: 50px; text-align: center; }
+        .spin-btn {
+            padding: 14px 36px; font-size: 1.3rem; font-weight: 900; letter-spacing: 2px;
+            text-transform: uppercase; border: none; border-radius: 30px; cursor: pointer;
+            background: linear-gradient(180deg, #e63946 0%, #9b1d20 100%);
+            color: #fff; box-shadow: 0 8px 25px rgba(230,57,70,0.6), 0 0 0 3px rgba(244,197,66,0.3);
+            transition: all 0.2s; position: relative; overflow: hidden;
+        }
+        .spin-btn:hover { box-shadow: 0 12px 35px rgba(230,57,70,0.8), 0 0 0 5px rgba(244,197,66,0.5); transform: translateY(-2px); }
+        .spin-btn:active { transform: scale(0.94); box-shadow: 0 4px 15px rgba(230,57,70,0.4); }
+        .spin-btn:disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; filter: grayscale(30%); }
+        .spin-btn::after {
+            content: ''; position: absolute; top: 2px; left: 50%; transform: translateX(-50%);
+            width: 60%; height: 3px; background: rgba(255,255,255,0.4); border-radius: 10px;
+        }
+        .quick-bets { display: flex; gap: 8px; justify-content: center; margin-top: 10px; flex-wrap: wrap; }
+        .quick-bet {
+            padding: 8px 16px; border-radius: 20px; border: 2px solid #3a3a55;
+            background: #12122a; color: #ccc; cursor: pointer; font-weight: 700;
+            font-size: 0.85rem; transition: all 0.2s; letter-spacing: 1px;
+        }
+        .quick-bet:hover { border-color: #f4c542; color: #f4c542; background: #1a1a35; }
+        .quick-bet.active { border-color: #f4c542; background: #2a2010; color: #f4c542; box-shadow: 0 0 15px rgba(244,197,66,0.3); }
+        .paytable {
+            margin-top: 16px; background: #0d0d1a; border-radius: 14px; padding: 14px 16px;
+            border: 1px solid #2a2a3d; display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 8px; text-align: center; font-size: 0.75rem; color: #aaa;
+        }
+        .paytable .pt-item { display: flex; align-items: center; gap: 6px; justify-content: center; }
+        .paytable .pt-symbol { font-size: 1.5rem; }
+        .paytable .pt-mult { color: #f4c542; font-weight: 700; }
+        .paytable-title { grid-column: 1/-1; text-align: center; font-weight: 700; letter-spacing: 3px; color: #f4c542; font-size: 0.7rem; text-transform: uppercase; margin-bottom: 4px; }
+        .fullscreen-win {
+            position: fixed; top:0; left:0; width:100%; height:100%; z-index:999;
+            display: flex; align-items: center; justify-content: center; pointer-events: none;
+            animation: overlayFade 2.5s ease-out forwards;
+            background: radial-gradient(circle, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%);
+            backdrop-filter: blur(4px);
+        }
+        @keyframes overlayFade { 0%{opacity:0} 15%{opacity:1} 85%{opacity:1} 100%{opacity:0} }
+        .fullscreen-content { text-align: center; animation: scaleUp 0.5s cubic-bezier(0.175,0.885,0.32,1.275) forwards; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        @keyframes scaleUp { from{transform:scale(0.2)} to{transform:scale(1)} }
+        .fullscreen-win .win-text { font-size: 5rem; font-weight: 900; letter-spacing: 5px; text-shadow: 0 0 60px currentColor; animation: glowPulse 0.5s ease-in-out infinite alternate; }
+        @keyframes glowPulse { from{text-shadow:0 0 40px currentColor} to{text-shadow:0 0 90px currentColor,0 0 120px white} }
+        .fullscreen-win .win-amount { font-size: 3rem; font-weight: 800; color: #fff; text-shadow: 0 0 40px rgba(255,255,255,0.8); }
+        .confetti {
+            position: fixed; top:-10px; width:12px; height:12px; background:#ff0;
+            animation: confettiFall linear forwards; z-index:1000; pointer-events: none;
+        }
+        @keyframes confettiFall { 0%{transform:translateY(0)rotate(0deg);opacity:1} 100%{transform:translateY(110vh)rotate(720deg);opacity:0} }
+        .modal-overlay {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.8); z-index:1000; display: flex;
+            align-items: center; justify-content: center; backdrop-filter: blur(6px);
+        }
+        .modal {
+            background: linear-gradient(135deg, #1a1a35, #12122a);
+            border: 2px solid #f4c542; border-radius: 24px; padding: 30px;
+            max-width: 400px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 30px rgba(244,197,66,0.3);
+            text-align: center; animation: modalPop 0.3s ease-out;
+        }
+        @keyframes modalPop { from{transform:scale(0.8);opacity:0} to{transform:scale(1);opacity:1} }
+        .modal h3 { color: #f4c542; font-size: 1.8rem; margin-bottom: 20px; letter-spacing: 2px; }
+        .topup-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+        .topup-option {
+            background: #0d0d1a; border: 2px solid #3a3a55; border-radius: 16px;
+            padding: 12px; cursor: pointer; color: #fff; font-weight: 700;
+            transition: all 0.2s; font-size: 1.1rem;
+        }
+        .topup-option:hover { border-color: #f4c542; background: #1a1a35; box-shadow: 0 0 20px rgba(244,197,66,0.3); }
+        .close-modal {
+            background: #e63946; border: none; color: white; padding: 10px 25px;
+            border-radius: 20px; cursor: pointer; font-weight: 700; letter-spacing: 1px; transition: 0.2s;
+        }
+        .close-modal:hover { background: #c0392b; }
+        @media (max-width: 480px) {
+            .reel { width: 80px; height: 80px; font-size: 2.8rem; }
+            .reels { gap: 6px; }
+            .spin-btn { padding: 12px 24px; font-size: 1rem; }
+            .header .brand { font-size: 1.8rem; }
+            .balance-value { font-size: 1.2rem; }
+            .balance-value.credit { font-size: 1.4rem; }
+            .fullscreen-win .win-text { font-size: 3rem; }
+            .fullscreen-win .win-amount { font-size: 2rem; }
+        }
+    </style>
 </head>
-
 <body>
-<div class="card">
-  <h1>SPEED TEST</h1>
+    <div class="particles" id="particles"></div>
+    <div class="container">
+        <div class="header">
+            <div class="brand">MuaniBet789</div>
+            <button class="mute-btn" id="muteButton" title="Suara">🔊</button>
+            <div class="subtitle">✨ Mega Slot ✨</div>
+        </div>
+        <div class="machine-outer">
+            <div class="machine">
+                <div class="balance-panel">
+                    <div class="balance-item">
+                        <span class="balance-icon">💰</span>
+                        <div>
+                            <div class="balance-label">Saldo</div>
+                            <div class="balance-value credit" id="balanceDisplay">Rp 10.000</div>
+                        </div>
+                    </div>
+                    <button class="topup-btn" id="topupButton">➕ Isi Saldo</button>
+                    <div class="divider"></div>
+                    <div class="balance-item">
+                        <span class="balance-icon">🎯</span>
+                        <div>
+                            <div class="balance-label">Taruhan</div>
+                            <div class="balance-value" id="betDisplay">Rp 500</div>
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="balance-item">
+                        <span class="balance-icon">🏆</span>
+                        <div>
+                            <div class="balance-label">Menang</div>
+                            <div class="balance-value" id="winDisplay" style="color:#4ecb71;">Rp 0</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="win-message" id="winMessage"></div>
+                <div class="reels-container">
+                    <div class="reels" id="reelsContainer">
+                        <div class="reel" id="reel0">🍒</div>
+                        <div class="reel" id="reel1">🍒</div>
+                        <div class="reel" id="reel2">🍒</div>
+                    </div>
+                    <div class="payline-indicator">🎯 <span>1 PAYLINE</span> — 3 Sama = Menang!</div>
+                </div>
+                <div class="controls">
+                    <div class="bet-group">
+                        <span class="bet-label">TARUHAN</span>
+                        <button class="bet-btn" id="betMinus">−</button>
+                        <span class="bet-amount" id="betAmountDisplay">Rp 500</span>
+                        <button class="bet-btn" id="betPlus">+</button>
+                    </div>
+                    <button class="spin-btn" id="spinButton">🎰 PUTAR</button>
+                </div>
+                <div class="quick-bets">
+                    <button class="quick-bet" data-bet="100">100</button>
+                    <button class="quick-bet active" data-bet="500">500</button>
+                    <button class="quick-bet" data-bet="1000">1K</button>
+                    <button class="quick-bet" data-bet="2500">2.5K</button>
+                    <button class="quick-bet" data-bet="5000">5K</button>
+                    <button class="quick-bet" data-bet="10000">10K</button>
+                </div>
+                <div class="paytable">
+                    <div class="paytable-title">📋 Tabel Pembayaran (x Taruhan)</div>
+                    <div class="pt-item"><span class="pt-symbol">🍒</span> <span class="pt-mult">x3</span></div>
+                    <div class="pt-item"><span class="pt-symbol">🍋</span> <span class="pt-mult">x4</span></div>
+                    <div class="pt-item"><span class="pt-symbol">🍊</span> <span class="pt-mult">x5</span></div>
+                    <div class="pt-item"><span class="pt-symbol">🍇</span> <span class="pt-mult">x6</span></div>
+                    <div class="pt-item"><span class="pt-symbol">💎</span> <span class="pt-mult">x8</span></div>
+                    <div class="pt-item"><span class="pt-symbol">⭐</span> <span class="pt-mult">x10</span></div>
+                    <div class="pt-item"><span class="pt-symbol">🔔</span> <span class="pt-mult">x12</span></div>
+                    <div class="pt-item"><span class="pt-symbol">7️⃣</span> <span class="pt-mult">x25</span></div>
+                    <div class="pt-item"><span class="pt-symbol">👑</span> <span class="pt-mult">🎰 JACKPOT x100</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-overlay" id="topupModal" style="display: none;">
+        <div class="modal">
+            <h3>💰 Isi Saldo</h3>
+            <div class="topup-options">
+                <div class="topup-option" data-amount="5000">Rp 5.000</div>
+                <div class="topup-option" data-amount="10000">Rp 10.000</div>
+                <div class="topup-option" data-amount="50000">Rp 50.000</div>
+                <div class="topup-option" data-amount="100000">Rp 100.000</div>
+                <div class="topup-option" data-amount="500000">Rp 500.000</div>
+                <div class="topup-option" data-amount="1000000">Rp 1.000.000</div>
+            </div>
+            <button class="close-modal" id="closeModal">Tutup</button>
+        </div>
+    </div>
+    <script>
+        (function() {
+            const SYMBOLS = ['🍒','🍋','🍊','🍇','💎','⭐','🔔','7️⃣','👑'];
+            const PAYOUTS = {
+                '🍒':3,'🍋':4,'🍊':5,'🍇':6,'💎':8,'⭐':10,'🔔':12,'7️⃣':25,'👑':100
+            };
+            let balance = 10000, bet = 500, isSpinning = false;
+            let currentReels = ['🍒','🍒','🍒'];
+            let spinIntervals = [null,null,null];
+            let stopCount = 0;
+            let muted = false;
 
-  <div class="stats">
-    <div class="stat">PING<span id="ping">-</span></div>
-    <div class="stat">DOWNLOAD<span id="down">0 Mbps</span></div>
-    <div class="stat">UPLOAD<span id="up">0 Mbps</span></div>
-  </div>
+            // Audio
+            let audioCtx = null;
+            let spinNoiseNode = null;
+            let spinNoiseGain = null;
 
-  <div class="gauge">
-    <div class="needle" id="needle"></div>
-  </div>
+            function initAudio() {
+                if (audioCtx) return;
+                try {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                } catch(e) {
+                    console.warn('Audio tidak didukung');
+                }
+            }
 
-  <div class="progress"><div class="bar" id="bar"></div></div>
+            function resumeAudio() {
+                if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+            }
 
-  <div class="speed" id="speed">0 Mbps</div>
+            function playTone(freq, duration, type='sine', vol=0.3, delay=0) {
+                if (!audioCtx || muted) return;
+                const now = audioCtx.currentTime + delay;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, now);
+                gain.gain.setValueAtTime(vol, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now);
+                osc.stop(now + duration);
+            }
 
-  <button id="btn" onclick="startTest()">START TEST</button>
+            function playClickSound() {
+                playTone(800, 0.08, 'sine', 0.15);
+            }
 
-  <div class="miku">
-    <img src="miku.png">
-  </div>
-</div>
+            function startSpinSound() {
+                if (!audioCtx || muted) return;
+                stopSpinSound();
+                const bufferSize = 2 * audioCtx.sampleRate;
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() * 2 - 1;
+                }
+                const source = audioCtx.createBufferSource();
+                source.buffer = buffer;
+                source.loop = true;
+                const filter = audioCtx.createBiquadFilter();
+                filter.type = 'bandpass';
+                filter.frequency.value = 1800;
+                filter.Q.value = 0.8;
+                const gain = audioCtx.createGain();
+                gain.gain.value = 0.25;
+                source.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+                source.start();
+                spinNoiseNode = source;
+                spinNoiseGain = gain;
+            }
 
-<script>
-const maxGauge = 1000;
+            function stopSpinSound() {
+                if (spinNoiseNode) {
+                    try { spinNoiseNode.stop(); } catch(e) {}
+                    spinNoiseNode.disconnect();
+                    spinNoiseNode = null;
+                }
+                if (spinNoiseGain) {
+                    spinNoiseGain.disconnect();
+                    spinNoiseGain = null;
+                }
+            }
 
-function rotateNeedle(mbps){
-  const angle = Math.min(mbps / maxGauge * 180 - 90, 90);
-  document.getElementById("needle").style.transform =
-    `rotate(${angle}deg)`;
-}
+            function playStopTick() {
+                playTone(1100, 0.06, 'square', 0.2);
+            }
 
-async function pingTest(){
-  const t0 = performance.now();
-  await fetch("https://www.cloudflare.com/cdn-cgi/trace",{cache:"no-store"});
-  return Math.round(performance.now()-t0);
-}
+            function playWinSound() {
+                const notes = [523.25, 659.25, 783.99]; // C5, E5, G5
+                notes.forEach((freq, i) => {
+                    playTone(freq, 0.25, 'sine', 0.35, i * 0.12);
+                });
+                setTimeout(() => {
+                    playTone(1046.5, 0.6, 'sine', 0.4, 0);
+                }, notes.length * 120);
+            }
 
-async function downloadTest(){
-  const url="https://speed.cloudflare.com/__down?bytes=25000000";
-  let start=performance.now();
-  let res=await fetch(url,{cache:"no-store"});
-  let reader=res.body.getReader();
-  let received=0;
+            function playJackpotSound() {
+                const melody = [523.25, 587.33, 659.25, 783.99, 1046.5];
+                melody.forEach((freq, i) => {
+                    playTone(freq, 0.3, 'sine', 0.5, i * 0.1);
+                });
+                setTimeout(() => {
+                    for (let i=0; i<3; i++) {
+                        playTone(1318.5, 0.5, 'triangle', 0.7, i*0.2);
+                    }
+                }, melody.length * 100 + 100);
+            }
 
-  while(true){
-    const {done,value}=await reader.read();
-    if(done) break;
-    received+=value.length;
+            function updateMuteButton() {
+                const btn = document.getElementById('muteButton');
+                btn.textContent = muted ? '🔇' : '🔊';
+                if (muted) {
+                    btn.classList.add('muted');
+                    stopSpinSound();
+                } else {
+                    btn.classList.remove('muted');
+                }
+            }
 
-    let time=(performance.now()-start)/1000;
-    let mbps=(received*8/1e6)/time;
-    update(mbps,received/25000000*100);
-  }
-  return (received*8/1e6)/((performance.now()-start)/1000);
-}
+            // DOM Elements
+            const balanceDisplay = document.getElementById('balanceDisplay');
+            const betDisplay = document.getElementById('betDisplay');
+            const winDisplay = document.getElementById('winDisplay');
+            const winMessage = document.getElementById('winMessage');
+            const betAmountDisplay = document.getElementById('betAmountDisplay');
+            const spinButton = document.getElementById('spinButton');
+            const betMinusBtn = document.getElementById('betMinus');
+            const betPlusBtn = document.getElementById('betPlus');
+            const reelElements = [
+                document.getElementById('reel0'),
+                document.getElementById('reel1'),
+                document.getElementById('reel2')
+            ];
+            const quickBetButtons = document.querySelectorAll('.quick-bet');
+            const topupButton = document.getElementById('topupButton');
+            const topupModal = document.getElementById('topupModal');
+            const closeModal = document.getElementById('closeModal');
+            const topupOptions = document.querySelectorAll('.topup-option');
+            const muteButton = document.getElementById('muteButton');
 
-async function uploadTest(){
-  const size=10*1024*1024;
-  const data=new Uint8Array(size);
-  const start=performance.now();
-  await fetch("https://speed.cloudflare.com/__up",{
-    method:"POST",
-    body:data
-  });
-  return (size*8/1e6)/((performance.now()-start)/1000);
-}
+            function formatRupiah(angka) { return 'Rp ' + angka.toLocaleString('id-ID'); }
 
-function update(mbps,progress){
-  document.getElementById("speed").innerText = mbps.toFixed(2)+" Mbps";
-  document.getElementById("down").innerText = mbps.toFixed(2)+" Mbps";
-  document.getElementById("bar").style.width = progress+"%";
-  rotateNeedle(mbps);
-}
+            function updateUI() {
+                balanceDisplay.textContent = formatRupiah(balance);
+                betDisplay.textContent = formatRupiah(bet);
+                betAmountDisplay.textContent = formatRupiah(bet);
+                quickBetButtons.forEach(btn => {
+                    btn.classList.toggle('active', parseInt(btn.dataset.bet) === bet);
+                });
+                spinButton.disabled = (balance < bet || isSpinning);
+                betMinusBtn.disabled = isSpinning;
+                betPlusBtn.disabled = isSpinning;
+                quickBetButtons.forEach(b => b.disabled = isSpinning);
+            }
 
-async function startTest(){
-  const btn=document.getElementById("btn");
-  btn.disabled=true;
+            function setWinMessage(text, type) {
+                winMessage.textContent = text;
+                winMessage.className = 'win-message';
+                if (type) winMessage.classList.add(type);
+            }
 
-  document.getElementById("bar").style.width="0%";
-  document.getElementById("speed").innerText="Testing...";
+            function clearReelEffects() {
+                reelElements.forEach(el => el.classList.remove('winner-reel','jackpot-reel'));
+            }
 
-  const ping=await pingTest();
-  document.getElementById("ping").innerText=ping+" ms";
+            function getRandomSymbol() { return SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)]; }
 
-  const down=await downloadTest();
-  document.getElementById("down").innerText=down.toFixed(2)+" Mbps";
+            function spinAllReels() { reelElements.forEach(el => el.classList.add('spinning')); }
 
-  const up=await uploadTest();
-  document.getElementById("up").innerText=up.toFixed(2)+" Mbps";
+            function updateReelVisual(index) { reelElements[index].textContent = getRandomSymbol(); }
 
-  btn.disabled=false;
-}
-</script>
+            function stopReel(index, finalSymbol) {
+                if (spinIntervals[index]) { clearInterval(spinIntervals[index]); spinIntervals[index] = null; }
+                reelElements[index].classList.remove('spinning');
+                reelElements[index].classList.add('stopping');
+                playStopTick();
+                setTimeout(() => {
+                    reelElements[index].textContent = finalSymbol;
+                    reelElements[index].classList.remove('stopping');
+                    currentReels[index] = finalSymbol;
+                    stopCount++;
+                    if (stopCount >= 3) allReelsStopped();
+                }, 300);
+            }
+
+            function showFullscreenWin(symbol, winAmount, isJackpot) {
+                const overlay = document.createElement('div');
+                overlay.className = 'fullscreen-win';
+                const content = document.createElement('div');
+                content.className = 'fullscreen-content';
+                const winText = document.createElement('div');
+                winText.className = 'win-text';
+                winText.textContent = isJackpot ? '🎰 JACKPOT! 🎰' : '🎉 MENANG! 🎉';
+                winText.style.color = isJackpot ? '#ff4500' : '#ffd700';
+                const amountEl = document.createElement('div');
+                amountEl.className = 'win-amount';
+                amountEl.textContent = formatRupiah(winAmount);
+                const symbolEl = document.createElement('div');
+                symbolEl.style.fontSize = '4rem';
+                symbolEl.textContent = symbol;
+                content.appendChild(symbolEl);
+                content.appendChild(winText);
+                content.appendChild(amountEl);
+                overlay.appendChild(content);
+                document.body.appendChild(overlay);
+                spawnConfetti(80);
+                setTimeout(() => overlay.remove(), 2500);
+            }
+
+            function spawnConfetti(count) {
+                const colors = ['#ff0','#f00','#0f0','#00f','#ff4500','#ffd700','#ff69b4','#00ffff'];
+                for (let i=0; i<count; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random()*100+'%';
+                    confetti.style.background = colors[Math.floor(Math.random()*colors.length)];
+                    confetti.style.animationDuration = (Math.random()*2+2)+'s';
+                    confetti.style.width = (Math.random()*10+5)+'px';
+                    confetti.style.height = confetti.style.width;
+                    document.body.appendChild(confetti);
+                    setTimeout(() => confetti.remove(), 4000);
+                }
+            }
+
+            function allReelsStopped() {
+                isSpinning = false;
+                stopCount = 0;
+                spinIntervals = [null,null,null];
+                stopSpinSound();
+                clearReelEffects();
+                updateUI();
+                const [r0,r1,r2] = currentReels;
+                if (r0 === r1 && r1 === r2) {
+                    const symbol = r0;
+                    const multiplier = PAYOUTS[symbol];
+                    const winAmount = bet * multiplier;
+                    balance += winAmount;
+                    winDisplay.textContent = formatRupiah(winAmount);
+                    winDisplay.style.color = '#4ecb71';
+                    if (symbol === '👑') {
+                        reelElements.forEach(el => el.classList.add('jackpot-reel'));
+                        setWinMessage(`🎉 JACKPOT! x${multiplier} = ${formatRupiah(winAmount)}`, 'jackpot');
+                        playJackpotSound();
+                        showFullscreenWin(symbol, winAmount, true);
+                    } else {
+                        reelElements.forEach(el => el.classList.add('winner-reel'));
+                        setWinMessage(`✨ Menang! x${multiplier} = ${formatRupiah(winAmount)}`, 'win');
+                        playWinSound();
+                        showFullscreenWin(symbol, winAmount, false);
+                    }
+                } else {
+                    winDisplay.textContent = 'Rp 0';
+                    winDisplay.style.color = '#888';
+                    setWinMessage('😔 Coba lagi!', 'lose');
+                }
+                updateUI();
+            }
+
+            function startSpin() {
+                if (isSpinning) return;
+                if (balance < bet) { setWinMessage('❌ Saldo tidak cukup!', 'lose'); return; }
+                resumeAudio();
+                initAudio();
+                balance -= bet;
+                winDisplay.textContent = 'Rp 0';
+                winDisplay.style.color = '#888';
+                setWinMessage('🎰 Berputar...', '');
+                clearReelEffects();
+                updateUI();
+                isSpinning = true;
+                stopCount = 0;
+                spinButton.disabled = true;
+                startSpinSound();
+                const finalSymbols = [getRandomSymbol(), getRandomSymbol(), getRandomSymbol()];
+                spinAllReels();
+                for (let i=0; i<3; i++) {
+                    spinIntervals[i] = setInterval(() => updateReelVisual(i), 60);
+                    setTimeout(() => stopReel(i, finalSymbols[i]), 800 + i*600);
+                }
+            }
+
+            function changeBet(amount) {
+                if (isSpinning) return;
+                bet = Math.min(100000, Math.max(100, amount));
+                if (bet > balance) bet = balance;
+                updateUI();
+            }
+
+            function adjustBet(delta) {
+                if (isSpinning) return;
+                const steps = [100,200,500,1000,2500,5000,10000,25000,50000,100000];
+                let idx = steps.findIndex(s => s >= bet);
+                if (idx === -1) idx = steps.length-1;
+                idx = Math.min(steps.length-1, Math.max(0, idx+delta));
+                let newBet = steps[idx];
+                if (newBet > balance) {
+                    for (let i=steps.length-1; i>=0; i--) { if (steps[i] <= balance) { newBet = steps[i]; break; } }
+                }
+                bet = Math.max(100, newBet);
+                updateUI();
+            }
+
+            function openTopupModal() { topupModal.style.display = 'flex'; playClickSound(); }
+            function closeTopupModal() { topupModal.style.display = 'none'; }
+            function handleTopup(amount) {
+                balance += amount;
+                updateUI();
+                closeTopupModal();
+                setWinMessage(`💰 Saldo bertambah ${formatRupiah(amount)}!`, 'win');
+                spawnConfetti(30);
+                playClickSound();
+            }
+
+            // Event Listeners
+            spinButton.addEventListener('click', () => { playClickSound(); startSpin(); });
+            betMinusBtn.addEventListener('click', () => { playClickSound(); adjustBet(-1); });
+            betPlusBtn.addEventListener('click', () => { playClickSound(); adjustBet(1); });
+            quickBetButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    playClickSound();
+                    if (isSpinning) return;
+                    const amount = parseInt(btn.dataset.bet);
+                    if (amount <= balance) changeBet(amount);
+                    else { setWinMessage('❌ Saldo tidak cukup', 'lose'); setTimeout(() => setWinMessage('',''), 1500); }
+                });
+            });
+            topupButton.addEventListener('click', openTopupModal);
+            closeModal.addEventListener('click', closeTopupModal);
+            topupModal.addEventListener('click', (e) => { if (e.target === topupModal) closeTopupModal(); });
+            topupOptions.forEach(opt => opt.addEventListener('click', () => {
+                handleTopup(parseInt(opt.dataset.amount));
+            }));
+            muteButton.addEventListener('click', () => {
+                muted = !muted;
+                updateMuteButton();
+                if (muted) stopSpinSound();
+                playClickSound();
+            });
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space' && !isSpinning && balance >= bet) {
+                    e.preventDefault();
+                    playClickSound();
+                    startSpin();
+                }
+                if (e.code === 'ArrowLeft' && !isSpinning) { e.preventDefault(); adjustBet(-1); playClickSound(); }
+                if (e.code === 'ArrowRight' && !isSpinning) { e.preventDefault(); adjustBet(1); playClickSound(); }
+                if (e.key === 'Escape') closeTopupModal();
+            });
+
+            // Particles
+            function createParticles() {
+                const container = document.getElementById('particles');
+                for (let i=0; i<40; i++) {
+                    const p = document.createElement('div');
+                    p.className = 'particle';
+                    p.style.left = Math.random()*100+'%';
+                    p.style.top = Math.random()*100+'%';
+                    p.style.width = (Math.random()*4+2)+'px';
+                    p.style.height = p.style.width;
+                    p.style.animationDuration = (Math.random()*15+10)+'s';
+                    p.style.animationDelay = Math.random()*10+'s';
+                    container.appendChild(p);
+                }
+            }
+            createParticles();
+
+            updateUI();
+            setWinMessage('🎰 Siap bermain! Tekan PUTAR', '');
+            updateMuteButton();
+            console.log('🎰 MuaniBet789 siap dengan suara!');
+        })();
+    </script>
 </body>
-</html>
+                                                                  </html>
